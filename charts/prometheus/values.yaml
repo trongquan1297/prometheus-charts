@@ -248,60 +248,10 @@ server:
   extraConfigmapLabels: {}
 
   ingress:
-    ## If true, Prometheus server Ingress will be created
-    ##
-    enabled: true
-
-    # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-    # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-    ingressClassName: alb
-
-    ## Prometheus server Ingress annotations
-    ##
-    annotations: {}
-       kubernetes.io/ingress.class: alb
-       alb.ingress.kubernetes.io/scheme: internet-facing
-       alb.ingress.kubernetes.io/target-type: ip
-       alb.ingress.kubernetes.io/group.name: dev-group
-       alb.ingress.kubernetes.io/subnets: subnet-0ca48d89ebbec7330, subnet-0eb1348b46310fcb2
-       alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-southeast-1:820883240614:certificate/49dd9f51-2571-47db-a89d-670a95db90d8
-
-
-
-    ## Prometheus server Ingress additional labels
-    ##
-    extraLabels: {}
-
-    ## Prometheus server Ingress hostnames with optional path
-    ## Must be provided if Ingress is enabled
-    ##
-    hosts: []
-       - prometheus.monkeyuni.com
-    #   - domain.com/prometheus
-
-    path: /
-
-    # pathType is only for k8s >= 1.18
-    pathType: Prefix
-
-    ## Extra paths to prepend to every host configuration. This is useful when working with annotation based services.
-    extraPaths: []
-    # - path: /*
-    #   backend:
-    #     serviceName: ssl-redirect
-    #     servicePort: use-annotation
-
-    ## Prometheus server Ingress TLS configuration
-    ## Secrets must be manually created in the namespace
-    ##
-    tls:
-    #   - secretName: prometheus-server-tls
-        - hosts:
-           - prometheus.monkeyuni.com
-
-  ## Server Deployment Strategy type
-  strategy:
-    type: Recreate
+    group: dev-group
+    rules:
+      host: beta.monkey.edu.vn
+      port: 9090
 
   ## hostAliases allows adding entries to /etc/hosts inside the containers
   hostAliases: []
